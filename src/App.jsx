@@ -3,22 +3,25 @@ import {
   useAppKitProvider,
   useAppKitAccount,
 } from "@reown/appkit/react";
-import { BrowserProvider, Contract, formatUnits } from "ethers";
+import { BrowserProvider, Contract } from "ethers";
+import { sepolia } from "@reown/appkit/networks";
 import "./config/appKit";
+import abi from "./connections/testABI";
 
-const contractAddress = "0x617f3112bf5397D0467D315cC709EF968D9ba546";
-const abi = [
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function balanceOf(address) view returns (uint)",
-  "function transfer(address to, uint amount)",
-  "event Transfer(address indexed from, address indexed to, uint amount)",
-];
+const contractAddress = import.meta.env.VITE__TEST_CONTRACT_ADDRESS;
+
+if (!contractAddress) {
+  throw new Error("contract address is not defined");
+}
 
 export default function App() {
   const { open } = useAppKit();
-  const { address, isConnected } = useAppKitAccount();
+  const {
+    // address,
+    isConnected,
+  } = useAppKitAccount();
   const { walletProvider } = useAppKitProvider("eip155");
+  console.log(sepolia.rpcUrls);
 
   async function getBalance() {
     try {
@@ -28,9 +31,10 @@ export default function App() {
       const signer = await ethersProvider.getSigner();
       // The Contract object
       const contract = new Contract(contractAddress, abi, signer);
-      const balance = await contract.balanceOf(address);
+      const balance = await contract.unlockTime();
 
-      console.log(formatUnits(balance, 18));
+      // console.log(formatUnits(balance, 18));
+      console.log(balance, typeof balance);
     } catch (error) {
       console.log(error);
     }

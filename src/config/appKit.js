@@ -1,7 +1,6 @@
 import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
-import { arbitrum, mainnet } from "@reown/appkit/networks";
-
+import { localhost, mainnet, sepolia } from "@reown/appkit/networks";
 // 1. Get projectId
 const projectId = import.meta.env.VITE__REOWN_PROJECT_ID;
 
@@ -10,7 +9,7 @@ if (!projectId) {
 }
 
 // 2. Set the networks
-const networks = [arbitrum, mainnet];
+const networks = [mainnet, localhost, sepolia];
 
 // 3. Create a metadata object - optional
 const metadata = {
@@ -30,4 +29,3 @@ createAppKit({
     analytics: true, // Optional - defaults to your Cloud configuration
   },
 });
-
