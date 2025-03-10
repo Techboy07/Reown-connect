@@ -3,7 +3,7 @@ import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { arbitrum, mainnet } from "@reown/appkit/networks";
 
 // 1. Get projectId
-const projectId = import.meta.env.VITE__REOWN_PROJECT-ID
+const projectId = import.meta.env.VITE__REOWN_PROJECT_ID;
 
 // 2. Set the networks
 const networks = [arbitrum, mainnet];
@@ -26,7 +26,3 @@ createAppKit({
     analytics: true, // Optional - defaults to your Cloud configuration
   },
 });
-
-export default function App() {
-  return <YourApp />; // Configure the <w3m-button> or a similar button inside
-}
